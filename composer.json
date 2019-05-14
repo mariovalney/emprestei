@@ -1,0 +1,11 @@
+{
+    "require": {
+        "phpmd/phpmd": "^2.6",
+        "squizlabs/php_codesniffer": "^3.4"
+    },
+    "scripts"    : {
+        "lint": "vendor/bin/phpcs",
+        "phpmd": "vendor/bin/phpmd . text phpmd.xml",
+        "phpcbf": "vendor/bin/phpcbf"
+    }
+}
