@@ -41,7 +41,7 @@ class Response
 
         if (! DEBUG) return;
 
-        throw new ViewNotFoundException('View [' . $this->view . '] not found');
+        throw new ViewNotFoundException($this->view);
     }
 
     /**

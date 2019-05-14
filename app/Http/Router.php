@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Exceptions\NotFoundException;
+use App\Exceptions\ClassNotFoundException;
 
 class Router
 {
@@ -64,6 +65,7 @@ class Router
      * @param  string $url
      *
      * @throws NotFoundException
+     * @throws ClassNotFoundException
      *
      * @return void
      */
@@ -89,12 +91,17 @@ class Router
 
             // Check for 'ControllerClass@methodName'
             if (is_string($route->callback)) {
-                $route->callback = explode('@', $route->callback);
+                $callback = explode('@', $route->callback);
 
-                $route->callback[0] = 'App\Controllers\\' . $route->callback[0];
-                if (count($route->callback) < 2) {
-                    $route->callback[1] = 'index';
+                $class = 'App\Controllers\\' . $callback[0];
+                if (! class_exists($class)) {
+                    throw new ClassNotFoundException($class, 'Controller');
                 }
+
+                $route->callback = [
+                    new $class(),
+                    ($callback[1] ?? '') ?: 'index',
+                ];
             }
 
             if (! is_callable($route->callback)) {

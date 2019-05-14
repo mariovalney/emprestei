@@ -74,8 +74,6 @@ class Kernel
             $response = new Response($e->getStatusCode());
             $response->setView('404');
             $response->render();
-        } catch (Exception $e) {
-            error_log($e->getMessage());
         }
     }
 }
