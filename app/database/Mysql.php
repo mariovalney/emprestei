@@ -66,7 +66,14 @@ class Mysql implements Database
         return self::$instance;
     }
 
-    public function create() {}
+    public function create($table, $columns) {
+        $columns = implode(',', array_values($columns));
+
+        $query = "CREATE TABLE IF NOT EXISTS $table ($columns)";
+
+        $result = $this->conn->exec($query);
+    }
+
     public function insert() {}
     public function query() {}
     public function delete() {}

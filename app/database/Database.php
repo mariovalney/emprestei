@@ -6,7 +6,7 @@ interface Database
 {
     public function getInstance();
 
-    public function create();
+    public function create($table, $columns);
 
     public function insert();
 
