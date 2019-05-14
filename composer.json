@@ -1,4 +1,9 @@
 {
+    "autoload": {
+        "psr-4": {
+            "App\\":"app/"
+        }
+    },
     "require": {
         "phpmd/phpmd": "^2.6",
         "squizlabs/php_codesniffer": "^3.4"
