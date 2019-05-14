@@ -34,7 +34,7 @@ class Migrator
      */
     public function __construct($database)
     {
-        if (! defined('DEBUG') || ! DEBUG) {
+        if (! DEBUG) {
             return;
         }
 

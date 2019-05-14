@@ -4,6 +4,10 @@ namespace App;
 
 use App\Database\Migrator;
 use App\Database\Mysql;
+use App\Http\Router;
+use App\Http\Response;
+use App\Exceptions\HttpException;
+use Exception;
 
 class Kernel
 {
@@ -22,6 +26,13 @@ class Kernel
     private $db;
 
     /**
+     * A database instance
+     *
+     * @var App\Http\Router
+     */
+    private $router;
+
+    /**
      * Prepare the application
      *
      * @return
@@ -29,6 +40,7 @@ class Kernel
     public function __construct()
     {
         $this->db = new Mysql();
+        $this->router = new Router();
     }
 
     /**
@@ -36,7 +48,7 @@ class Kernel
      *
      * @return
      */
-    public function getInstance()
+    public static function getInstance()
     {
         if (! self::$instance) {
             self::$instance = new self();
@@ -54,5 +66,16 @@ class Kernel
     {
         $migrator = new Migrator($this->db);
         $migrator->run();
+
+        try {
+            $this->router->execute('/');
+        } catch (HttpException $e) {
+
+            $response = new Response($e->getStatusCode());
+            $response->setView('404');
+            $response->render();
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
     }
 }

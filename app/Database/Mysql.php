@@ -66,6 +66,14 @@ class Mysql implements Database
         return self::$instance;
     }
 
+    /**
+     * Create a table if not exits
+     *
+     * @param  string $table
+     * @param  array $columns
+     *
+     * @return
+     */
     public function create($table, $columns) {
         $columns = implode(',', array_values($columns));
 
