@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Database\Migrator;
 use App\Database\Mysql;
 
 class Kernel
@@ -51,6 +52,7 @@ class Kernel
      */
     public function init()
     {
-
+        $migrator = new Migrator($this->db);
+        $migrator->run();
     }
 }
