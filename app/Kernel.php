@@ -4,9 +4,9 @@ namespace App;
 
 use App\Database\Migrator;
 use App\Database\Mysql;
-use App\Http\Router;
-use App\Http\Response;
 use App\Exceptions\HttpException;
+use App\Http\Router;
+use App\Support\Facades\Response;
 use Exception;
 
 class Kernel
@@ -68,12 +68,12 @@ class Kernel
         $migrator->run();
 
         try {
-            $this->router->execute('/');
-        } catch (HttpException $e) {
+            $requestUri = $_SERVER['REQUEST_URI'];
+            $requestUri = explode('?', $requestUri);
 
-            $response = new Response($e->getStatusCode());
-            $response->setView('404');
-            $response->render();
+            $this->router->execute($requestUri[0]);
+        } catch (HttpException $e) {
+            Response::abort(404);
         }
     }
 }
