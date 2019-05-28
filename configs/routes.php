@@ -2,4 +2,5 @@
 
 return [
     '/' => 'Controller',
+    'adicionar' => 'Controller@add',
 ];

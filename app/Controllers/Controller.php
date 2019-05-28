@@ -11,4 +11,9 @@ class Controller
     {
         return Response::view('index');
     }
+
+    public function add(Request $request)
+    {
+        return Response::view('add-lending');
+    }
 }

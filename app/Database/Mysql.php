@@ -6,6 +6,9 @@ use PDO;
 
 class Mysql implements Database
 {
+    /** @var Mysql */
+    private static $instance;
+
     /** @var PDO */
     private $conn;
 
@@ -26,7 +29,6 @@ class Mysql implements Database
 
     /** @var string */
     private $pass;
-
 
     /**
      * Creating connection
@@ -57,7 +59,7 @@ class Mysql implements Database
      *
      * @return
      */
-    public function getInstance()
+    public static function getInstance()
     {
         if (! self::$instance) {
             self::$instance = new self();

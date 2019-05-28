@@ -2,7 +2,7 @@
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>Empréstimos</h1>
+    <h1>Adicionar Empréstimo</h1>
 </section>
 
 <!-- Main content -->

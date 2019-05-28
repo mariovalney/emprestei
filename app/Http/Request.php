@@ -19,20 +19,12 @@ class Request
     private $params;
 
     /**
-     * The route config
-     *
-     * @var object
-     */
-    private $route;
-
-    /**
      * Constructor
      */
-    public function __construct(string $url, array $params, object $route)
+    public function __construct(string $url, array $params)
     {
         $this->url = $url;
         $this->params = $params;
-        $this->route = $route;
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Exceptions\NotFoundException;
+use App\Exceptions\NotCallableException;
 use App\Exceptions\ClassNotFoundException;
 
 class Router
@@ -13,6 +14,18 @@ class Router
      * @var array
      */
     private $routes = [];
+
+    /**
+     * Keep data to application
+     *
+     * @var array
+     */
+    private static $router = [
+        'route' => null,
+        'params' => [],
+        'url' => '',
+        'path' => '',
+    ];
 
     /**
      * Constructor
@@ -29,7 +42,7 @@ class Router
 
         $routes = require_once($file);
 
-        foreach ($routes as $route => $callback) {
+        foreach ((array) $routes as $route => $callback) {
             $params = [];
             $pattern = '/^';
 
@@ -60,17 +73,54 @@ class Router
     }
 
     /**
-     * Runa  route
+     * Run a route
      *
      * @param  string $url
      *
-     * @throws NotFoundException
-     * @throws ClassNotFoundException
+     * @throws NotCallableException
      *
      * @return void
      */
     public function execute($url) {
         $url = trim($url, '/') . '/';
+
+        $data = $this->getRouteData($url);
+
+        if (empty($data['callback']) || ! is_callable($data['callback'])) {
+            throw new NotCallableException($data['callback']);
+        }
+
+        $request = new Request($url, $data['params']);
+        return call_user_func($data['callback'], $request);
+    }
+
+    /**
+     * Return the current router data
+     *
+     * @return array
+     */
+    public function getCurrentRoute()
+    {
+        return (object) self::$router;
+    }
+
+    /**
+     * Find the callback for route
+     *
+     * @throws ClassNotFoundException
+     * @throws NotFoundException
+     *
+     * @return array
+     */
+    private function getRouteData($url)
+    {
+        // Restart current router data
+        self::$router = [
+            'route' => null,
+            'params' => [],
+            'url' => $this->getBaseUrl(),
+            'path' => $url,
+        ];
 
         foreach ($this->routes as $route) {
             if (! preg_match($route->pattern, $url, $params)) {
@@ -104,14 +154,33 @@ class Router
                 ];
             }
 
-            if (! is_callable($route->callback)) {
-                return;
-            }
+            /**
+             * Data for application
+             */
+            self::$router['route'] = $route;
 
-            $request = new Request($url, $data, $route);
-            return call_user_func($route->callback, $request);
+            return [
+                'callback' => $route->callback,
+                'params' => $data,
+            ];
         }
 
         throw new NotFoundException($url, 404);
+    }
+
+    /**
+     * Get a absolute URL from path
+     *
+     * @param  string $url
+     * @return string
+     */
+    private function getBaseUrl()
+    {
+        $schema = ($_SERVER['REQUEST_SCHEME'] ?? 'http') . '://';
+        $domain = $_SERVER['HTTP_HOST'] ?? ($_SERVER['SERVER_NAME'] ?? '' );
+
+        $domain = rtrim($domain, '/');
+
+        return $schema . $domain;
     }
 }

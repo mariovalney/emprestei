@@ -4,7 +4,7 @@ namespace App\Database;
 
 interface Database
 {
-    public function getInstance();
+    public static function getInstance();
 
     public function create($table, $columns);
 

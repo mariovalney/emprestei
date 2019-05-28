@@ -7,6 +7,7 @@ use App\Database\Mysql;
 use App\Exceptions\HttpException;
 use App\Http\Router;
 use App\Support\Facades\Response;
+use App\Support\Facades\Helper;
 use Exception;
 
 class Kernel
@@ -39,7 +40,9 @@ class Kernel
      */
     public function __construct()
     {
-        $this->db = new Mysql();
+        Helper::includeAll();
+
+        $this->db = Mysql::getInstance();
         $this->router = new Router();
     }
 
