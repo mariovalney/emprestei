@@ -33,7 +33,7 @@ class Mysql implements Database
     /**
      * Creating connection
      */
-    public function __construct()
+    private function __construct()
     {
         if (! defined('DB_NAME') || ! defined('DB_HOST') || ! defined('DB_USER') || ! defined('DB_PASS') ) {
             die('Check database info in config.php');
@@ -53,6 +53,16 @@ class Mysql implements Database
             die("Error to connect with Database");
         }
     }
+
+    /**
+     * Avoid Cloning
+     */
+    private function __clone() {}
+
+    /**
+     * Avoid Unserialize
+     */
+    private function __wakeup() {}
 
     /**
      * Retrieve a instance
