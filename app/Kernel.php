@@ -22,13 +22,6 @@ class Kernel
     /**
      * A database instance
      *
-     * @var App\Database\MySQL
-     */
-    private $db;
-
-    /**
-     * A database instance
-     *
      * @var App\Http\Router
      */
     private $router;
@@ -42,7 +35,6 @@ class Kernel
     {
         Helper::includeAll();
 
-        $this->db = Mysql::getInstance();
         $this->router = new Router();
     }
 
@@ -67,7 +59,7 @@ class Kernel
      */
     public function init()
     {
-        $migrator = new Migrator($this->db);
+        $migrator = new Migrator(Mysql::getInstance());
         $migrator->run();
 
         try {
