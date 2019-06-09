@@ -57,6 +57,8 @@ class Controller
      */
     public function updatePost(Request $request)
     {
+        $editing = true;
+
         // If a ID is provided, try to find the models
         $id = $request->params('id');
         if (! empty($id)) {
@@ -67,8 +69,15 @@ class Controller
 
         // Create new Models if empty
         if (empty($lending)) {
+            $editing = false;
             $lending = new Lending();
+        }
+
+        if (empty($thing)) {
             $thing = new Thing();
+        }
+
+        if (empty($lender)) {
             $lender = new Lender();
         }
 
@@ -111,15 +120,17 @@ class Controller
 
             $id = $lending->save();
 
-            Response::success('Empréstimo adicionado.');
+            $message = ($editing) ? 'Empréstimo atualizado.' : 'Empréstimo adicionado.';
+            Response::success($message);
 
             return Response::redirect('emprestimo/' . $id);
         } catch (ModelInvalidException $e) {
             Response::error($e->getMessage());
         } catch (Exception $e) {
-            Response::error('Não foi possível salvar seu empréstimo.');
+            $message = ($editing) ? 'Não foi possível alterar seu empréstimo.' : 'Não foi possível salvar seu empréstimo.';
+            Response::error($message);
         }
 
-        return Response::view('add-lending');
+        return Response::back();
     }
 }

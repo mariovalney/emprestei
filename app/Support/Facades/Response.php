@@ -35,6 +35,19 @@ class Response extends Facade
      * @param  string $name
      * @return void
      */
+    public static function back()
+    {
+        $url = $_SERVER['HTTP_REFERER'] ?? '';
+
+        header("Location: " . $url);
+    }
+
+    /**
+     * Redirect to url
+     *
+     * @param  string $name
+     * @return void
+     */
     public static function redirect($url)
     {
         header("Location: " . url($url));

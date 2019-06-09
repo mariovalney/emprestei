@@ -85,7 +85,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <a href="<?php echo url('/'); ?>" type="submit" class="btn btn-danger">Voltar</a>
-            <button type="submit" class="btn btn-primary pull-right">Adicionar</button>
+            <button type="submit" class="btn btn-primary pull-right">Salvar</button>
         </div>
     </div>
 </div>
