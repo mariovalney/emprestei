@@ -38,4 +38,38 @@ class Lending extends Model
 
         return true;
     }
+
+    /**
+     * Get the thing or a empty object
+     *
+     * @return object
+     */
+    public function getThing()
+    {
+        if (! empty($this->thing_id)) {
+            $thing = Thing::find($this->thing_id);
+            if (! empty($thing)) {
+                return $thing;
+            }
+        }
+
+        return (object) [];
+    }
+
+    /**
+     * Get the lender or a empty object
+     *
+     * @return object
+     */
+    public function getLender()
+    {
+        if (! empty($this->lender_id)) {
+            $lender = Lender::find($this->lender_id);
+            if (! empty($lender)) {
+                return $lender;
+            }
+        }
+
+        return (object) [];
+    }
 }

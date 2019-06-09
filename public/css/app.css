@@ -3,3 +3,11 @@
     width: 100%!important;
     max-width: 100%;
 }
+
+table .actions .btn {
+    margin-right: 10px;
+}
+
+table .actions .btn:last-of-type {
+    margin-right: 0;
+}
