@@ -95,14 +95,27 @@ class Router
             $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
             $method = ucfirst(strtolower($method));
 
+            $callbackWithoutRequestType = $this->removeRequestTypeFromCallback($data['callback'][1]);
+
             $callback = [
                 $data['callback'][0],
-                $data['callback'][1] . $method,
+                $callbackWithoutRequestType . $method,
             ];
 
-            if (is_callable($callback)) {
-                $data['callback'] = $callback;
+            // Check method with request is callable
+            if (! is_callable($callback)) {
+                if ($method !== 'Get') {
+                    throw new NotCallableException($callback);
+                }
+
+                // If not, check method without request is callable for GET request
+                $callback[1] = $callbackWithoutRequestType;
+                if (! is_callable($callback)) {
+                    $callback[1] .= $method;
+                }
             }
+
+            $data['callback'] = $callback;
         }
 
         // Check is callable
@@ -202,5 +215,23 @@ class Router
         $domain = rtrim($domain, '/');
 
         return $schema . $domain;
+    }
+
+    /**
+     * Remote 'Get', 'Post', 'Put' and 'Delete' as suffix callback suffix
+     *
+     * @param  string $method
+     * @return string
+     */
+    private function removeRequestTypeFromCallback($method)
+    {
+        $requestMethods = ['Get', 'Post', 'Put', 'Delete'];
+        foreach ($requestMethods as $requestMethod) {
+            if (strpos($method, $requestMethod) === strlen($method) - strlen($requestMethod)) {
+                return substr($method, 0, -1 * strlen($requestMethod));
+            }
+        }
+
+        return $method;
     }
 }
