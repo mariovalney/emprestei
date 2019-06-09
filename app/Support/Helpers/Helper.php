@@ -12,7 +12,7 @@ class Helper
      */
     public function __construct()
     {
-        $directory = ROOT . DS . 'app' . DS . 'Support' . DS . 'Helpers' . DS . 'includes';
+        $directory = ROOT . 'app' . DS . 'Support' . DS . 'Helpers' . DS . 'includes';
 
         foreach(scandir($directory) as $file) {
             $file = $directory . DS . $file;
