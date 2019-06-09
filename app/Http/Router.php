@@ -51,7 +51,7 @@ class Router
             foreach ($route as $slug) {
                 if (preg_match('/{.+}/', $slug, $matches)) {
                     $params[] = substr($slug, 1, -1);
-                    $slug = '(.*)';
+                    $slug = '([^\/]*)';
                 }
 
                 $pattern .= $slug . '\/';
