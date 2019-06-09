@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\Facades\Database;
 use App\Support\Model;
 use App\Exceptions\ModelInvalidException;
 
@@ -54,6 +55,12 @@ class Thing extends Model
      */
     public static function getAllTypes()
     {
-        return [];
+        $types = [];
+        $results = Database::select('things', [], 'DISTINCT(type)');
+        foreach ($results as $result) {
+            $types[] = $result['type'];
+        }
+
+        return $types;
     }
 }

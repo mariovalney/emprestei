@@ -110,14 +110,15 @@ class Mysql implements Database
      *
      * @return array
      */
-    public function select(string $table, array $where = []) {
+    public function select(string $table, array $where = [], $columns = '*', $afterWhere = '') {
         $where = $this->createWhereClause($where);
 
-        $query = "SELECT * FROM $table WHERE $where->clause";
+        $query = "SELECT $columns FROM $table WHERE $where->clause $afterWhere";
+
         $query = $this->conn->prepare($query);
         $query->execute($where->values);
 
-        return $query->fetchAll();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
