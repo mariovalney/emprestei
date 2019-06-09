@@ -55,17 +55,32 @@ class Controller
      * @param Request $request
      * @return Response::view
      */
-    public function addPost(Request $request)
+    public function updatePost(Request $request)
     {
-        // Create the Thing
-        $thing = new Thing([
+        // If a ID is provided, try to find the models
+        $id = $request->params('id');
+        if (! empty($id)) {
+            $lending = Lending::find($id);
+            $thing = Thing::find($lending->thing_id);
+            $lender = Lender::find($lending->lender_id);
+        }
+
+        // Create new Models if empty
+        if (empty($lending)) {
+            $lending = new Lending();
+            $thing = new Thing();
+            $lender = new Lender();
+        }
+
+        // Fill the Models
+        $thing->fill([
             'name' => $request->post('thing-name'),
             'type' => $request->post('thing-type'),
             'note' => $request->post('thing-note'),
         ]);
 
         // Create the Lender
-        $lender = new Lender([
+        $lender->fill([
             'name' => $request->post('lender-name'),
             'email' => $request->post('lender-email'),
             'phone' => $request->post('lender-phone'),
@@ -81,7 +96,7 @@ class Controller
         $start = str_replace('/', '-', $start);
         $end = str_replace('/', '-', $end);
 
-        $lending = new Lending([
+        $lending->fill([
             'date_start' => date('Y-m-d', strtotime($start)),
             'date_end' => date('Y-m-d', strtotime($end)),
         ]);

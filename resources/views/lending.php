@@ -7,7 +7,7 @@
 
 <!-- Main content -->
 <section class="content">
-    <form action="<?php echo url('/emprestimo/' . $lending->id); ?>" method="POST">
+    <form action="<?php echo url('/salvar/' . $lending->ID); ?>" method="POST">
         <?php include_template('templates/form-lending', $this->getData()); ?>
     </form>
 </section>

@@ -33,18 +33,7 @@ class Model
      */
     public function __construct(array $attributes = [])
     {
-        foreach ($attributes as $key => $value) {
-            if ($key === static::$identifier) {
-                $this->{static::$identifier} = $value;
-                continue;
-            }
-
-            if (! in_array($key, $this->fillable, true)) {
-                continue;
-            }
-
-            $this->attributes[ $key ] = $value;
-        }
+        $this->fill($attributes);
     }
 
     /**
@@ -101,6 +90,28 @@ class Model
     public function validate()
     {
         return true;
+    }
+
+    /**
+     * Fill the model with attributes
+     *
+     * @param  array  $attributes
+     * @return void
+     */
+    public function fill(array $attributes)
+    {
+        foreach ($attributes as $key => $value) {
+            if ($key === static::$identifier) {
+                $this->{static::$identifier} = $value;
+                continue;
+            }
+
+            if (! in_array($key, $this->fillable, true)) {
+                continue;
+            }
+
+            $this->attributes[ $key ] = $value;
+        }
     }
 
     /**
