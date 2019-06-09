@@ -19,26 +19,16 @@
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="thing-name">Nome:</label>
-                                <input type="text" class="form-control" id="thing-name" name="thing-name" placeholder="Nome/Descrição do Objeto" required>
+                                <?php FormBuilder::label('Nome:', 'thing-name'); ?>
+                                <?php FormBuilder::input('text', 'thing-name', 'name', true, ['class' => 'form-control', 'placeholder' => 'Nome/Descrição do Objeto']); ?>
                             </div>
                             <div class="form-group">
-                                <label for="thing-type">Tipo:</label>
-                                <select id="thing-type" name="thing-type" class="form-control select2-with-tags" required>
-                                    <option disabled selected>-- Escolha ou adicione um novo tipo</option>
-                                    <?php
-                                        $types = App\Models\Thing::getAllTypes();
-                                        foreach ($types as $type) :
-                                    ?>
-                                        <option value="<?php echo $type; ?>">
-                                            <?php echo $type; ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
+                                <?php FormBuilder::label('Tipo:', 'thing-type'); ?>
+                                <?php FormBuilder::select(App\Models\Thing::getAllTypes(), 'thing-type', 'type', true, ['class' => 'form-control select2-with-tags', 'data-placeholder' => '-- Escolha ou adicione um novo tipo']); ?>
                             </div>
                             <div class="form-group">
-                                <label for="thing-note">Notas:</label>
-                                <textarea id="thing-note" name="thing-note" class="form-control" rows="4" placeholder="Observações"></textarea>
+                                <?php FormBuilder::label('Notas:', 'thing-note'); ?>
+                                <?php FormBuilder::textarea('thing-note', 'note', true, ['class' => 'form-control', 'rows' => 4, 'placeholder' => 'Observações']); ?>
                             </div>
                         </div>
                     </div>
@@ -50,20 +40,20 @@
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="lender-name">Nome:</label>
-                                <input type="text" class="form-control" id="lender-name" name="lender-name" placeholder="Nome" required>
+                                <?php FormBuilder::label('Nome:', 'lender-name'); ?>
+                                <?php FormBuilder::input('text', 'lender-name', 'name', true, ['class' => 'form-control', 'placeholder' => 'Nome']); ?>
                             </div>
                             <div class="form-group">
-                                <label for="lender-email">E-mail:</label>
-                                <input type="email" class="form-control" id="lender-email" name="lender-email" placeholder="E-mail">
+                                <?php FormBuilder::label('E-mail:', 'lender-email'); ?>
+                                <?php FormBuilder::input('text', 'lender-email', 'email', false, ['class' => 'form-control', 'placeholder' => 'E-mail']); ?>
                             </div>
                             <div class="form-group">
-                                <label for="lender-phone">Telefone:</label>
-                                <input type="text" class="form-control mask-phone" id="lender-phone" name="lender-phone" placeholder="(99) 99999-9999">
+                                <?php FormBuilder::label('Telefone:', 'lender-phone'); ?>
+                                <?php FormBuilder::input('text', 'lender-phone', 'phone', false, ['class' => 'form-control mask-phone', 'placeholder' => '(99) 99999-9999']); ?>
                             </div>
                             <div class="form-group">
-                                <label for="lending-date">Data do Emprestimo:</label>
-                                <input type="text" class="form-control" id="lending-date" name="lending-date" required>
+                                <?php FormBuilder::label('Data do Emprestimo:', 'lending-date'); ?>
+                                <?php FormBuilder::input('text', 'lending-date', 'date', true, ['class' => 'form-control']); ?>
                             </div>
                         </div>
                     </div>

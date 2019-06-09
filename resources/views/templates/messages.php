@@ -1,6 +1,6 @@
 <?php
 
-foreach(\App\Support\Facades\Response::messages() as $type => $messages) {
+foreach(Response::messages() as $type => $messages) {
     foreach($messages as $message) {
         $class = $type === 'error' ? 'danger' : $type;
 
