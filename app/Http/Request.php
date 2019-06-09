@@ -5,6 +5,13 @@ namespace App\Http;
 class Request
 {
     /**
+     * The last Request created
+     *
+     * @var Request
+     */
+    private static $instance;
+
+    /**
      * The requested URL
      *
      * @var string
@@ -25,16 +32,30 @@ class Request
     {
         $this->url = $url;
         $this->params = $params;
+
+        self::$instance = $this;
     }
 
     /**
-     * Return all params
+     * Get the last request created
+     */
+    public static function last()
+    {
+        return self::$instance;
+    }
+
+    /**
+     * Return URL params
      *
      * @return array
      */
-    public function params()
+    public function params($key = '')
     {
-        return $this->params;
+        if (empty($key)) {
+            return $this->params;
+        }
+
+        return $this->params[ $key ] ?? null;
     }
 
     /**

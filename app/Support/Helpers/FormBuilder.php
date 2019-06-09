@@ -2,8 +2,32 @@
 
 namespace App\Support\Helpers;
 
+use App\Support\Facades\Request;
+
 class FormBuilder
 {
+    /** @var mixed  */
+    private static $model;
+
+    /**
+     * Set a model
+     *
+     * @param  mixed $model
+     * @return void
+     */
+    public function model($model)
+    {
+        $this::$model = $model;
+    }
+
+    /**
+     * Echoes form Label
+     *
+     * @param  string $label
+     * @param  string $for
+     * @param  array  $attributes
+     * @return string
+     */
     public function label($label, $for = '', $attributes = [])
     {
         $attributes['for'] = $for;
@@ -55,10 +79,14 @@ class FormBuilder
         $selected = $attributes['value'] ?? '';
         unset($attributes['value']);
 
+        // Check is associative array
+        if (array_keys($options) === range(0, count($options) - 1)) {
+            $values = array_values($options);
+            $options = array_combine($values, $values);
+        }
+
         echo '<select ' . $this->attributes($attributes) . '>';
         foreach ($options as $optionValue => $optionLabel) {
-            $optionLabel = $optionLabel ?: $optionValue;
-
             $optionAttributes = ['value' => $optionValue];
             if ($selected == $optionValue) {
                 $optionAttributes['selected'] = 'selected';
@@ -91,8 +119,15 @@ class FormBuilder
             $attributes['required'] = 'required';
         }
 
-        if (! empty($this->model) && isset($this->model->{$property})) {
-            $attributes['value'] = $this->model->{$property};
+        // Try value from Request
+        $old = Request::input($attributes['name']);
+        if (! is_null($old)) {
+            $attributes['value'] = $old;
+        }
+
+        // Try value from Model
+        if (empty($attributes['value']) && ! empty($this::$model) && isset($this::$model->{$property})) {
+            $attributes['value'] = $this::$model->{$property};
         }
 
         return $attributes;

@@ -2,13 +2,13 @@
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>Adicionar Empréstimo</h1>
+    <h1>Empréstimo</h1>
 </section>
 
 <!-- Main content -->
 <section class="content">
-    <form action="<?php echo url('/adicionar'); ?>" method="POST">
-        <?php include_template('templates/form-lending'); ?>
+    <form action="<?php echo url('/emprestimo/' . $lending->id); ?>" method="POST">
+        <?php include_template('templates/form-lending', $this->getData()); ?>
     </form>
 </section>
 

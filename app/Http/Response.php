@@ -24,6 +24,13 @@ class Response
     private $view;
 
     /**
+     * The view data
+     *
+     * @var string
+     */
+    private $data;
+
+    /**
      * Constructor
      */
     public function __construct(int $statusCode = 200)
@@ -38,6 +45,10 @@ class Response
     {
         $file = VIEW_DIR . DS . $this->view . '.php';
         if (file_exists($file)) {
+            if (! empty($this->data)) {
+                extract($this->data, EXTR_OVERWRITE);
+            }
+
             require $file;
             return;
         }
@@ -65,6 +76,26 @@ class Response
     public function getView()
     {
         return $this->view;
+    }
+
+    /**
+     * Set data
+     *
+     * @param string $data
+     */
+    public function setData(array $data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * Get data
+     *
+     * @return string $data
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**

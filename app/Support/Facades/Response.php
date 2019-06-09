@@ -20,12 +20,24 @@ class Response extends Facade
      * @param  string $name
      * @return void
      */
-    public static function view($name)
+    public static function view($name, $data = [])
     {
         $response = static::create();
         $response->setView($name);
+        $response->setData($data);
 
         return $response->render();
+    }
+
+    /**
+     * Redirect to url
+     *
+     * @param  string $name
+     * @return void
+     */
+    public static function redirect($url)
+    {
+        header("Location: " . url($url));
     }
 
     /**
