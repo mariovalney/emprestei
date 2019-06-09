@@ -79,6 +79,19 @@ class Model
     }
 
     /**
+     * Magic method to check a attribute isseted
+     *
+     * @param  string $name
+     * @return mixed
+     */
+    public function __isset($key)
+    {
+        $value = $this->__get($key);
+
+        return isset($key);
+    }
+
+    /**
      * Validate the model
      *
      * @throws ModelInvalidException
