@@ -6,7 +6,8 @@
     },
     "require": {
         "phpmd/phpmd": "^2.6",
-        "squizlabs/php_codesniffer": "^3.4"
+        "squizlabs/php_codesniffer": "^3.4",
+        "symfony/var-dumper": "^4.3"
     },
     "scripts"    : {
         "lint": "vendor/bin/phpcs",
