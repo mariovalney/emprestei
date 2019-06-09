@@ -40,6 +40,23 @@ class Lending extends Model
     }
 
     /**
+     * Delete the Model
+     */
+    public function delete()
+    {
+        $thing = $this->getThing();
+        $lender = $this->getLender();
+
+        $result = parent::delete();
+        if ($result) {
+            $thing->delete();
+            $lender->delete();
+        }
+
+        return $result;
+    }
+
+    /**
      * Get the thing or a empty object
      *
      * @return object

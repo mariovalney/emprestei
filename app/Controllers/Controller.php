@@ -8,6 +8,7 @@ use App\Models\Thing;
 use App\Http\Request;
 use App\Exceptions\ModelInvalidException;
 use App\Support\Facades\Response;
+use App\Support\Logger;
 
 class Controller
 {
@@ -47,6 +48,28 @@ class Controller
         }
 
         return Response::view('lending', ['lending' => $model]);
+    }
+
+    /**
+     * Show a lending
+     *
+     * @param  Request $request
+     * @return Response::view
+     */
+    public function delete(Request $request)
+    {
+        try {
+            $model = Lending::find($request->params('id'));
+            if (! empty($model) && $model->delete()) {
+                Response::success('Empréstimo removido.');
+                return Response::back();
+            }
+        } catch (Exception $e) {
+            Logger::error($e->getMessage());
+        }
+
+        Response::error('Não foi possível remover seu empréstimo.');
+        return Response::back();
     }
 
     /**
@@ -125,8 +148,12 @@ class Controller
 
             return Response::redirect('emprestimo/' . $id);
         } catch (ModelInvalidException $e) {
+            Logger::error($e->getMessage());
+
             Response::error($e->getMessage());
         } catch (Exception $e) {
+            Logger::error($e->getMessage());
+
             $message = ($editing) ? 'Não foi possível alterar seu empréstimo.' : 'Não foi possível salvar seu empréstimo.';
             Response::error($message);
         }
