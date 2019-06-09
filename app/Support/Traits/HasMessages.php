@@ -5,22 +5,15 @@ namespace App\Support\Traits;
 trait HasMessages
 {
     /**
-     * Messages
-     *
-     * @var  array
-     */
-    private static $messages = [];
-
-    /**
      * Retrieve all messages
      * @return [type] [description]
      */
     public function messages($empty = true)
     {
-        $messages = $this::$messages;
+        $messages = $_SESSION['messages_' . self::class] ?? [];
 
         if ($empty) {
-            $this::$messages = [];
+            $_SESSION['messages_' . self::class] = [];
         }
 
         return $messages;
@@ -68,10 +61,10 @@ trait HasMessages
      */
     private function addMessage($message, $type)
     {
-        if (empty($this::$messages[ $type ])) {
-            $this::$messages[ $type ] = [];
+        if (empty($_SESSION['messages_' . self::class][ $type ])) {
+            $_SESSION['messages_' . self::class][ $type ] = [];
         }
 
-        $this::$messages[ $type ][] = $message;
+        $_SESSION['messages_' . self::class][ $type ][] = $message;
     }
 }

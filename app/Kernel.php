@@ -34,6 +34,8 @@ class Kernel
      */
     public function __construct()
     {
+        session_start();
+
         FacadeLoader::init();
         Helper::includeAll();
 

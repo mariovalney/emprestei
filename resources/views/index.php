@@ -7,6 +7,8 @@
 
 <!-- Main content -->
 <section class="content">
+    <?php include_template('templates/messages'); ?>
+
     <div class="box">
         <div class="box-body">
             <table id="lendings" class="table table-bordered table-hover">
