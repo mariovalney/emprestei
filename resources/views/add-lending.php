@@ -9,6 +9,8 @@
 <section class="content">
     <form action="<?php echo url('/adicionar'); ?>" method="POST">
         <div class="box-body">
+            <?php include_template('templates/messages'); ?>
+
             <div class="row">
                 <div class="col-sm-12 col-md-6">
                     <div class="box box-primary" data-match-height="boxes">
@@ -18,11 +20,11 @@
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="thing-name">Nome:</label>
-                                <input type="text" class="form-control" id="thing-name" name="thing-name" placeholder="Nome/Descrição do Objeto">
+                                <input type="text" class="form-control" id="thing-name" name="thing-name" placeholder="Nome/Descrição do Objeto" required>
                             </div>
                             <div class="form-group">
                                 <label for="thing-type">Tipo:</label>
-                                <select id="thing-type" name="thing-type" class="form-control select2-with-tags">
+                                <select id="thing-type" name="thing-type" class="form-control select2-with-tags" required>
                                     <option disabled selected>-- Escolha ou adicione um novo tipo</option>
                                     <?php
                                         $types = App\Models\Thing::getAllTypes();
@@ -49,7 +51,7 @@
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="lender-name">Nome:</label>
-                                <input type="text" class="form-control" id="lender-name" name="lender-name" placeholder="Nome">
+                                <input type="text" class="form-control" id="lender-name" name="lender-name" placeholder="Nome" required>
                             </div>
                             <div class="form-group">
                                 <label for="lender-email">E-mail:</label>
@@ -61,7 +63,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="lending-date">Data do Emprestimo:</label>
-                                <input type="text" class="form-control" id="lending-date" name="lending-date">
+                                <input type="text" class="form-control" id="lending-date" name="lending-date" required>
                             </div>
                         </div>
                     </div>

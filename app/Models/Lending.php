@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Support\Model;
+use App\Exceptions\ModelInvalidException;
 
 class Lending extends Model
 {
@@ -19,11 +20,22 @@ class Lending extends Model
     ];
 
     /**
-     * Default Attributes
+     * Validate the model
      *
-     * @var array
+     * @throws ModelInvalidException
+     *
+     * @return boolean
      */
-    protected $attributes = [
-        'date_start' => date('Y-m-d H:i:s'),
-    ];
+    public function validate()
+    {
+        if (empty($this->date_start)) {
+            throw new ModelInvalidException('A data de início do empréstimo é obrigatória.');
+        }
+
+        if (empty($this->date_end)) {
+            throw new ModelInvalidException('A data de término do empréstimo é obrigatória.');
+        }
+
+        return true;
+    }
 }

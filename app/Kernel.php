@@ -68,7 +68,13 @@ class Kernel
 
             $this->router->execute($requestUri[0]);
         } catch (HttpException $e) {
-            Response::abort(404);
+            if (! DEBUG) {
+                Response::abort(404);
+                return;
+            }
+
+            // Rethrow if debugging
+            throw $e;
         }
     }
 }

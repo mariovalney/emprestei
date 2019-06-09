@@ -79,6 +79,18 @@ class Model
     }
 
     /**
+     * Validate the model
+     *
+     * @throws ModelInvalidException
+     *
+     * @return boolean
+     */
+    public function validate()
+    {
+        return true;
+    }
+
+    /**
      * Create or update a new registry on database
      */
     public function save()

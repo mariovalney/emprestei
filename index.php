@@ -38,11 +38,13 @@ require_once(VENDOR_DIR . DS . 'autoload.php');
 try {
     App\Kernel::getInstance()->init();
 } catch (Exception $e) {
-    // TODO: A better debug UI
-    echo '<h1>Exceção ' . $e->getCode() . '</h1>';
-    echo '<p>Exceção ' . $e->getMessage() . '</p>';
+    if (DEBUG) {
+        // TODO: A better debug UI
+        echo '<h1>Exceção ' . $e->getCode() . '</h1>';
+        echo '<p>Exceção ' . $e->getMessage() . '</p>';
 
-    debug_print_backtrace();
+        debug_print_backtrace();
+    }
 }
 
 

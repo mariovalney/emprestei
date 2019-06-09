@@ -86,7 +86,27 @@ class Router
 
         $data = $this->getRouteData($url);
 
-        if (empty($data['callback']) || ! is_callable($data['callback'])) {
+        if (empty($data['callback'])) {
+            $data['callback'] = [];
+        }
+
+        // Try a callback by request type (only if is not a clousure)
+        if (is_array($data['callback']) && ! empty($data['callback'][1])) {
+            $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+            $method = ucfirst(strtolower($method));
+
+            $callback = [
+                $data['callback'][0],
+                $data['callback'][1] . $method,
+            ];
+
+            if (is_callable($callback)) {
+                $data['callback'] = $callback;
+            }
+        }
+
+        // Check is callable
+        if (! is_callable($data['callback'])) {
             throw new NotCallableException($data['callback']);
         }
 

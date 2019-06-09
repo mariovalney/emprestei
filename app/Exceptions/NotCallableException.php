@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class NotCallableException extends Exception
+class NotCallableException extends HttpException
 {
     /**
      * Constructor
@@ -21,6 +21,6 @@ class NotCallableException extends Exception
 
         $message = 'Callback [' . $callback . '] is invalid.';
 
-        parent::__construct($message, $code, $previous);
+        parent::__construct(404, $message, $code, $previous);
     }
 }

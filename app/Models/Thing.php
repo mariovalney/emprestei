@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Support\Model;
+use App\Exceptions\ModelInvalidException;
 
 class Thing extends Model
 {
@@ -14,7 +15,7 @@ class Thing extends Model
     protected $fillable = [
         'name',
         'type',
-        'description',
+        'note',
     ];
 
     /**
@@ -24,8 +25,28 @@ class Thing extends Model
      */
     protected $attributes = [
         'type' => '',
-        'description' => '',
+        'note' => '',
     ];
+
+    /**
+     * Validate the model
+     *
+     * @throws ModelInvalidException
+     *
+     * @return boolean
+     */
+    public function validate()
+    {
+        if (empty($this->name)) {
+            throw new ModelInvalidException('O nome do objeto é obrigatório.');
+        }
+
+        if (empty($this->type)) {
+            throw new ModelInvalidException('O tipo do objeto é obrigatório.');
+        }
+
+        return true;
+    }
 
     /**
      * Get all types on database
@@ -33,7 +54,6 @@ class Thing extends Model
      */
     public static function getAllTypes()
     {
-        return [
-        ];
+        return [];
     }
 }

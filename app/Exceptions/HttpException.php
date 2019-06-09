@@ -13,7 +13,6 @@ class HttpException extends Exception
      */
     private $statusCode;
 
-
     /**
      * Constructor
      *

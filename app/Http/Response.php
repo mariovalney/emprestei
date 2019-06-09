@@ -3,9 +3,12 @@
 namespace App\Http;
 
 use App\Exceptions\ViewNotFoundException;
+use App\Support\Traits\HasMessages;
 
 class Response
 {
+    use HasMessages;
+
     /**
      * The status code
      *
