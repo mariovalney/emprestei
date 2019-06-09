@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Support\Model;
 
-class Thing extends Model
+class Lender extends Model
 {
     /**
      * Field of Model
@@ -13,8 +13,8 @@ class Thing extends Model
      */
     protected $fillable = [
         'name',
-        'type',
-        'description',
+        'email',
+        'phone',
     ];
 
     /**
@@ -23,17 +23,8 @@ class Thing extends Model
      * @var array
      */
     protected $attributes = [
-        'type' => '',
-        'description' => '',
+        'name' => '',
+        'email' => '',
+        'phone' => '',
     ];
-
-    /**
-     * Get all types on database
-     * @return array
-     */
-    public static function getAllTypes()
-    {
-        return [
-        ];
-    }
 }
