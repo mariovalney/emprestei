@@ -11,7 +11,7 @@ class Database extends Facade
      */
     protected static function getFacadeClass()
     {
-        return 'App\Database\Mysql';
+        return 'App\Support\Database\Mysql';
     }
 
     /**

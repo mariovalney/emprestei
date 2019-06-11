@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Database;
+namespace App\Support\Database;
 
 use Exception;
 use PDO;
 use PDOException;
+use App\Support\Contracts\Database;
 use App\Support\Logger;
 
 class Mysql implements Database

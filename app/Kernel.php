@@ -2,10 +2,10 @@
 
 namespace App;
 
-use App\Database\Migrator;
-use App\Database\Mysql;
 use App\Exceptions\HttpException;
 use App\Http\Router;
+use App\Support\Database\Migrator;
+use App\Support\Database\Mysql;
 use App\Support\FacadeLoader;
 use App\Support\Facades\Response;
 use App\Support\Facades\Helper;
