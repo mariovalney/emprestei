@@ -7,7 +7,7 @@
 
 <!-- Main content -->
 <section class="content">
-    <form action="<?php echo url('/adicionar'); ?>" method="POST">
+    <form action="<?php echo url('/salvar'); ?>" method="POST">
         <?php include_template('templates/form-lending'); ?>
     </form>
 </section>
