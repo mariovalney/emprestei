@@ -1,6 +1,6 @@
 <?php
 
-$this->database->create('things', [
+Database::create('things', [
     'ID          BIGINT       AUTO_INCREMENT',
     'name        VARCHAR(255) NOT NULL',
     'type        VARCHAR(255) NOT NULL',

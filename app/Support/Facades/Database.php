@@ -11,7 +11,7 @@ class Database extends Facade
      */
     protected static function getFacadeClass()
     {
-        return 'App\Support\Database\Mysql';
+        return 'App\Support\Database\DatabaseFactory';
     }
 
     /**
@@ -21,6 +21,21 @@ class Database extends Facade
      */
     protected static function create()
     {
-        return static::getFacadeClass()::getInstance();
+        $database = parent::create();
+        return $database->createDatabase();
+    }
+
+    /**
+     * Handle dynamic, static calls to the object.
+     *
+     * @param  string  $method
+     * @param  array   $args
+     * @return mixed
+     *
+     * @throws \RuntimeException
+     */
+    public static function __callStatic($method, $args)
+    {
+        return static::create()->$method(...$args);
     }
 }

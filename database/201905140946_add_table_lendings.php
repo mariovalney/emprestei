@@ -1,6 +1,6 @@
 <?php
 
-$this->database->create('lendings', [
+Database::create('lendings', [
     'ID          BIGINT    AUTO_INCREMENT',
     'thing_id   BIGINT    NOT NULL',
     'lender_id   BIGINT    NOT NULL',

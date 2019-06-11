@@ -5,7 +5,6 @@ namespace App;
 use App\Exceptions\HttpException;
 use App\Http\Router;
 use App\Support\Database\Migrator;
-use App\Support\Database\Mysql;
 use App\Support\FacadeLoader;
 use App\Support\Facades\Response;
 use App\Support\Facades\Helper;
@@ -63,7 +62,7 @@ class Kernel
      */
     public function init()
     {
-        $migrator = new Migrator(Mysql::getInstance());
+        $migrator = new Migrator();
         $migrator->run();
 
         try {

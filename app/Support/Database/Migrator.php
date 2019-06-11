@@ -2,19 +2,14 @@
 
 namespace App\Support\Database;
 
+use App\Support\Facades\Database;
+
 class Migrator
 {
     /**
      * The dir for migrations
      */
     const DIRECTORY = 'database';
-
-    /**
-     * A database instance
-     *
-     * @var Mysql
-     */
-    private $database;
 
     /**
      * Timestamp from last migration
@@ -32,13 +27,12 @@ class Migrator
     /**
      * The constructor
      */
-    public function __construct($database)
+    public function __construct()
     {
         if (! DEBUG) {
             return;
         }
 
-        $this->database = $database;
         $this->migration = $this->getMigrationStatus();
         $this->migrations = $this->getMigrations();
     }

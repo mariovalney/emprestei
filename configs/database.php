@@ -4,6 +4,7 @@
  * Database configs
  */
 
+define('DB_DRIVER', 'mysql');
 define('DB_NAME', 'bancodedados');
 define('DB_USER', 'bancodedados');
 define('DB_PASS', 'bancodedados');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support\Database;
+namespace App\Support\Database\Drivers;
 
 use Exception;
 use PDO;
